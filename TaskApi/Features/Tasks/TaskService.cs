@@ -15,6 +15,7 @@ public sealed class TaskService(
 {
     public async Task<TaskResponse> CreateAsync(CreateTaskRequest request, CancellationToken ct)
     {
+        // HACK: нужно исключить whitespace-only.
         var task = new TaskItem
         {
             Id = Guid.NewGuid(),

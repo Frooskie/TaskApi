@@ -2,6 +2,9 @@
 
 namespace TaskApi.Features.Tasks.Contracts;
 
+// HACK: нет IValidatableObject для отсечения whitespace-only Title.
+// [Required] валидирует IsNullOrEmpty, а не IsNullOrWhiteSpace — строка "   " проходит,
+// после .Trim() в TaskService в БД попадает "".
 public sealed record CreateTaskRequest
 {
     [Required]

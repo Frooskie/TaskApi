@@ -1,0 +1,52 @@
+﻿@host = http://localhost:5133
+
+// HACK: интеграционный тест не написан — не успел по времени.
+### 1. Create valid task
+POST {{host}}/tasks
+Content-Type: application/json
+
+{
+    "title": "Buy milk",
+    "priority": "High"
+}
+
+### 2. Create without priority (defaults to Medium)
+POST {{host}}/tasks
+Content-Type: application/json
+
+{
+    "title": "Walk the dog"
+}
+
+### 3. Create with empty title (should be 400)
+POST {{host}}/tasks
+Content-Type: application/json
+
+{
+    "title": ""
+}
+
+### 4. Create with whitespace-only title (should be 400 if IValidatableObject, else 201)
+POST {{host}}/tasks
+Content-Type: application/json
+
+{
+    "title": "   "
+}
+
+### 5. Create with title > 200 chars (should be 400)
+POST {{host}}/tasks
+Content-Type: application/json
+
+{
+    "title": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+}
+
+### 6. Get all tasks
+GET {{host}}/tasks
+
+### 7. Complete first task (replace with real id from step 1)
+PUT {{host}}/tasks/3cd08c7f-95a1-459b-b283-b5acfadd35bc/complete
+
+### 8. Delete task (replace with real id)
+DELETE {{host}}/tasks/70403331-6b00-47cd-8d95-80f64a22ed71
